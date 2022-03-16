@@ -27,3 +27,19 @@ ansible also can guther facts about host mashines or VM-s. every little detail i
 command:
 `ansible all -m gather_facts` also we can limit the fact gathering of the inventory hosts by adding `--limit $host-ip` to the command `ad-hoc` in ansible terminology
 
+
+we cant execute sudo task without assigning new parameter to ansible adhoc command.
+for sudo access we have to add `--become --ask-become-pass` wchich will prompt us with hosts sudo password and then execute the command.
+for example, if we want to update apt of the host. we can run ad-hoc as such:
+`ansible all -m apt -a update_cache=true --become --ask-become-pass`
+-m means add module ex: apt
+-a means add argument ex: update_cache=true
+--become add sudo access
+--ask-become-pass add sudo password
+
+if hosts have same sudo password this this command will work. else ... (i'll add later on)
+
+we can add multipe arguments to the module by puting the argument in double quote ("") and put stace between arguments
+
+ex: 
+`ansible all -m apt -a "name=snapd state=latest" --become --ask-become-pass`
