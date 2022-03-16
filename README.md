@@ -20,3 +20,10 @@ inventory = inventory #name of the inventory file where all our host are located
 private_key_file = ~/.ssh/ssh-key-name #name of the ssh-key file that we gerenared and copyed to our host server(s)
 
 
+after creating the andible.cfg file our first command has shortened so it goes like this:
+`ansible all -m ping`
+
+ansible also can guther facts about host mashines or VM-s. every little detail it has per say.
+command:
+`ansible all -m gather_facts` also we can limit the fact gathering of the inventory hosts by adding `--limit $host-ip` to the command `ad-hoc` in ansible terminology
+
