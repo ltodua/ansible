@@ -43,3 +43,25 @@ we can add multipe arguments to the module by puting the argument in double quot
 
 ex: 
 `ansible all -m apt -a "name=snapd state=latest" --become --ask-become-pass`
+
+lets talk about ansible playbooks.
+ansible playbooks are the main way or to run multiple tasks or anything really, and execute ansible commands. for exampe: in the work directory i have created install_apache2.yml file to write and execute ansible playbooks.
+
+ansible playbooks are written in YML format.
+install_apache2.yml:
+
+` --- ` playbooks starts with three dash-es in order to let the sistem know that this is yml file
+under the dashes ` - hosts: all ` to indentifie the hosts and execute commands on them this is equal to the ad-hoc command `ansible all`
+we push enter and under the first letter of the `hosts` we write sudo priviladge parameter `become=true` this is equal to `--become`
+
+after this we can write tasks. what playbook must execute.
+under the first letter of parameter `--become` we write `tasks:` then press enter.
+under the first letter of `tasks: ` we write `- name: ` this is the begining of the task. every task must be written in this manner and be properly named.
+`- name: install apache2 package` this is the name of the task
+under the first letter of `- name` we write module name. so in our case `apt:` then enter.
+after enter we must make sure that between apt and next word space diference are 2 spaces and write name of the package we want to install, so `name: apache2`. we save the file and execute it:
+
+`ansible-playbook --ask-become-pass install_apache2.yml`
+ansible-palybook is the command with we execute playbooks
+-ask-become-pass means that we have to include password of sudo in order to make sudo changes
+install_apache2.yml is the name of the playbook
