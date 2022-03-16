@@ -1,0 +1,15 @@
+---
+  - name: "nginx installation on vbox hostgroup"
+    hosts: vbox
+    become: yes
+    
+    tasks:
+            
+      - name: "test if available"
+        ping:
+                
+      - name: "intall nginx"
+        apt:
+          name: nginx
+          state: present
+
