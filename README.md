@@ -65,3 +65,5 @@ after enter we must make sure that between apt and next word space diference are
 ansible-palybook is the command with we execute playbooks
 -ask-become-pass means that we have to include password of sudo in order to make sudo changes
 install_apache2.yml is the name of the playbook
+
+you can add as many tasks in the playbook as you want
