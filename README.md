@@ -68,6 +68,13 @@ install_apache2.yml is the name of the playbook
 
 you can add as many tasks in the playbook as you want.
 
-when command in ansible-playbook.
+when command in `ansible-playbook`.
 
-when is similar to if statement. when we declear when we can assign condition to the each play. when command to work we must guther_facts about hosts so execute the play if when command is true or false. we also can include our own conditons to when command which we'll have to pass as argument to ansible-playbook command up on execution. 
+`when` is similar to `if` statement. when we declear when we can assign condition to the each play. when command to work we must `gather_facts` about hosts so execute the play if when command is true or false. we also can include our own conditons to when command which we'll have to pass as argument to `ansible-playbook` command up on execution. 
+
+okaaay. well ansible is really cool
+
+i learned that ansible has General package manager module called `package` which i can include in the playbook.
+
+also you can declear your own variables. 
+ex: `"{{ name }}"` like this which you'll declear in inventory file and assign them individual values if neccesary for each host.

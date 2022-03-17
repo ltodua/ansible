@@ -1,3 +1,11 @@
 
-[linux]
-192.168.0.171
+[ubuntu]
+192.168.0.171 apache_package=nginx php_package=libapache2-mod-php
+
+
+[centos]
+192.168.0.129 apache_package=httpd php_package=php
+
+[all:vars]
+ansible_user=lucian
+ansible_password=sudo
