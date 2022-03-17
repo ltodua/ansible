@@ -78,3 +78,23 @@ i learned that ansible has General package manager module called `package` which
 
 also you can declear your own variables. 
 ex: `"{{ name }}"` like this which you'll declear in inventory file and assign them individual values if neccesary for each host.
+
+
+in inventory file we can devide or group hosts together. we can assign each group some kind of name. we can use this name in the playbook to do certain tasks with certain groups or hosts whatever it the purpose of them.
+
+
+to test plays individualy or so ansible has tags concept. where we can give any play any or as many tags as we want. we can run playbook with multipe or single tag.
+
+to assign tags to plays we siply have to add `tags: $name,#name2` parameter, if we want to have multiple tags in one play we should only separate it with coma no spaces.
+
+in order to run plays with tags first we have to list them. to list we have to execute command:
+
+`ansible-playbook --list-tags name_of_playbook.yml` this will give us the names of all the tags we can execute within playbook.
+
+to execute individual tags. run:
+
+`ansible-playbook -K --tags $tag_name name_of_playbook.yml` 
+
+to execute multiple tags. run:
+
+`ansible-playbook -K --tags "$tag1,tag2,tag2 name_of_playbook.yml"`
