@@ -4,7 +4,7 @@
   become: true
   pre_tasks: #gives us order executing tasks, plays
 
-
+  #play for updating centos package manager and system
   - name: install updates (CentOS)
     tags: always
     dnf:
@@ -12,7 +12,7 @@
       update_cache: yes
     when: ansible_distribution == "CentOS"
 
-
+  #play for updating ubuntu package manager and system
   - name: install updates (Ubuntu)
     tags: always
     apt:
@@ -21,14 +21,17 @@
     when: ansible_distribution == "Ubuntu"
 
 
+
 - hosts: localhost
   become: true
   tasks:
 
+    #play for installing unzip package
     - name: install unzip
       package:
         name: unzip
 
+    #play for installing terraform binary package
     - name: install terraform
       unarchive: #this is ansible module for unziping .zip / .tar files with help of unzip package
         src: https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip
@@ -44,6 +47,7 @@
   become: true
   tasks:
 
+  #play for installing nginx package for ubuntu cuz apache2 is dissapointment and emberasment for its bugs
   - name: install nginx package for Ubuntu
     tags: apache,ubuntu,apache2
     apt: #ubuntu package manager module
@@ -53,6 +57,7 @@
       state: latest
     when: ansible_distribution == "Ubuntu"
 
+  #play for installing apache "httpd" for centos
   - name: install apache package for CentOS
     tags: apache,centos,httpd
     dnf: #centos 8 package manager module
@@ -62,6 +67,33 @@
       state: latest
     when: ansible_distribution == "CentOS"
 
+  #play for starting adn enabling httpd service of centos hosts
+  - name: start httpd (CentOS)
+    tags: apache,centos,httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+    when: ansible_distribution == "CentOS"
+
+  #play for using lineinfile module of ansible to change one line fo any file in hosts
+  - name: change e-mail address for admin #name of the play
+    tags: apache,centos,httpd #tags 
+    lineinfile: #ansible module which helps us change line of any file in the host
+      path: /etc/httpd/conf/httpd.conf #to change line we need path of the file . the colation
+      regexp: '^ServerAdmin' #in order to find on which line change should occur we are using regular exprestion
+      line: ServerAdmin somebody@somewhere.net #line to change existing line with
+    when: ansible_distribution == "CentOS" #condition to execute play only on centos hosts
+    register: httpd
+
+  - name: restart httpd (CentOS)
+    tags: apache,centos,httpd
+    service:
+      name: httpd
+      state: restarted
+    when: httpd.changed
+
+  #play for copying html files to apache servers
   - name: copy defaults html file for site
     tags: apache,apache2,httpd
     copy:
