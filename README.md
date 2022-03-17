@@ -98,3 +98,7 @@ to execute individual tags. run:
 to execute multiple tags. run:
 
 `ansible-playbook -K --tags "$tag1,tag2,tag2" name_of_playbook.yml`
+
+i have added comments about services and few ansible modules. at `site.yml` file
+
+more descriptive info later...
