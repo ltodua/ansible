@@ -4,36 +4,33 @@
   become: true
   tasks:
 
-  - name: install apache package for Ubuntu and CentOS
-    package: # this is ansible module for declearing package managers. it'll call whichever package meneger is neccesary for individual host
+  # - name: install apache package for Ubuntu and CentOS
+  #   package: # this is ansible module for declearing package managers. it'll call whichever package meneger is neccesary for individual host
+  #     name: 
+  #       - "{{ apache_package }}" #declearing variables as strings
+  #       - "{{ php_package }}" #declearing variables as strings
+  #     state: latest
+  #     update_cache: yes
+
+
+
+  - name: install apache2 package for Ubuntu
+    apt: #ubuntu package manager module
       name: 
-        - "{{ apache_package }}" #declearing variables as strings
-        - "{{ php_package }}" #declearing variables as strings
+        - apache2
+        - libapache2-mod-php
       state: latest
       update_cache: yes
+    when: ansible_distribution == "Ubuntu"
 
-
-
-
-
-
-  # - name: install apache2 package for Ubuntu
-  #   apt: #ubuntu package manager module
-  #     name: 
-  #       - apache2
-  #       - libapache2-mod-php
-  #     state: latest
-  #     update_cache: yes
-  #   when: ansible_distribution == "Ubuntu"
-
-  # - name: install apache2 package for CentOS
-  #   dnf: centos 8 package manager module
-  #     name: 
-  #       - httpd
-  #       - php
-  #     state: latest
-  #     update_cache: yes
-  #   when: ansible_distribution == "CentOS"
+  - name: install apache2 package for CentOS
+    dnf: centos 8 package manager module
+      name: 
+        - httpd
+        - php
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
 
 #192.168.0.171
 #192.168.0.129
