@@ -99,6 +99,19 @@ to execute multiple tags. run:
 
 `ansible-playbook -K --tags "$tag1,tag2,tag2" name_of_playbook.yml`
 
+
+
+
+### to do
+
+how to add files to hosts server ...
+
+how to install binary package on hosts server ...
+
 i have added comments about services and few ansible modules. at `site.yml` file
 
 more descriptive info later...
+
+`registar:` what it is ans that is does ...
+`lineinfile` module ...
+`services` how can we use them in the playbook ...
