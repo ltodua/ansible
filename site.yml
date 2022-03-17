@@ -4,12 +4,14 @@
   become: true
   pre_tasks: #gives us order executing tasks, plays
 
+
   - name: install updates (CentOS)
     tags: always
     dnf:
       update_only: yes
       update_cache: yes
     when: ansible_distribution == "CentOS"
+
 
   - name: install updates (Ubuntu)
     tags: always
@@ -19,9 +21,11 @@
     when: ansible_distribution == "Ubuntu"
 
 
+
 - hosts: web_servers
   become: true
   tasks:
+
 
   - name: install nginx package for Ubuntu
     tags: apache,ubuntu,apache2
@@ -31,6 +35,7 @@
         - libapache2-mod-php
       state: latest
     when: ansible_distribution == "Ubuntu"
+
 
   - name: install apache package for CentOS
     tags: apache,centos,httpd
