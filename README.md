@@ -66,4 +66,8 @@ ansible-palybook is the command with we execute playbooks
 -ask-become-pass means that we have to include password of sudo in order to make sudo changes
 install_apache2.yml is the name of the playbook
 
-you can add as many tasks in the playbook as you want
+you can add as many tasks in the playbook as you want.
+
+when command in ansible-playbook.
+
+when is similar to if statement. when we declear when we can assign condition to the each play. when command to work we must guther_facts about hosts so execute the play if when command is true or false. we also can include our own conditons to when command which we'll have to pass as argument to ansible-playbook command up on execution. 
