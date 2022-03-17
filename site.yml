@@ -32,7 +32,7 @@
     apt: #ubuntu package manager module
       name: 
         - nginx
-        - libapache2-mod-php
+      #  - libapache2-mod-php
       state: latest
     when: ansible_distribution == "Ubuntu"
 
