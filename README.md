@@ -97,4 +97,4 @@ to execute individual tags. run:
 
 to execute multiple tags. run:
 
-`ansible-playbook -K --tags "$tag1,tag2,tag2 name_of_playbook.yml"`
+`ansible-playbook -K --tags "$tag1,tag2,tag2" name_of_playbook.yml`
