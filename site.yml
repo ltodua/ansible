@@ -5,20 +5,31 @@
   pre_tasks: #gives us order executing tasks, plays
 
   #play for updating centos package manager and system
-  - name: install updates (CentOS)
+  - name: update repo cache (CentOS)
     tags: always
     dnf:
-      update_only: yes
       update_cache: yes
+    changed_when: false
     when: ansible_distribution == "CentOS"
 
   #play for updating ubuntu package manager and system
-  - name: install updates (Ubuntu)
+  - name: update repo cache (Ubuntu)
     tags: always
     apt:
-      upgrade: dist
       update_cache: yes
+    changed_when: false #cleans the output. if change occurs we want see it in the terminal
     when: ansible_distribution == "Ubuntu"
+
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: add ssh-key for ansible user
+      tags: always
+      authorized_key:
+        user: ansible
+        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+NrDR6/cstSlELDF/LSNkw2HfRQp0CUlaQLTJJByRfEWw/8zWmcM3T++IOHGnkH/edBBTiZeTrrBs3PEKCoK9tzb1Ve4VHxho4O66SNKKnct4owBqg1qopv4ZS1gIalIrqAWhfasCxmssIuyRhHg/WhmBj648A7I27BFIKDHrSt816on89EdD+kTbgEtwqVR1ODT6QQ6U0Y+yS8g/tX+I/b29idctXjNwdo6jeq9+pXSShl605WLIfqUqPlAXiPqivWmcBEHoqtUmyokPaQNmKSC/xi/CyqKCwzd71VEdE99OE/Oj8MFCccqb9LkjduyPDHoVR+hkRQydl2iIuBnyZj6ek60cDf45JirhVUFX9+QjoyOxoHbcKwmH/pms+VVr4bWBStTqmaN32LUdHKq9PDAGICowzf3S3Vei3GBZ6P86Y+u1u/1cqq9JaD7tS57sCIJwJdWQXAjGX2EONX39cLdj5WBqh2nQ24c/lapyY3Md2UIAtb8IRG8Cj7SczjhSqlcAekuludNm74jSyeQfOsxE6PQr1gEesTVjgEaPqNl+KlMta1Q80pz9UWPx4zixYE70kF3QxNLqe0sSz/ig/hVcHuyYw4rRIq3JYOlmxaX7UJDl3sldW9WxcUCf60gz64Im9WFHt4E9gaHRXthpo2e/AotfNQ6Cepco1T0PlQ== lucian@lenovo"
 
 
 
