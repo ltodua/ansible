@@ -1,0 +1,14 @@
+#play for installing unzip package
+- name: install unzip
+  package:
+    name: unzip
+
+#play for installing terraform binary package
+- name: install terraform
+  unarchive: #this is ansible module for unziping .zip / .tar files with help of unzip package
+    src: https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip
+    dest: /usr/local/bin
+    remote_src: yes
+    mode: 0755
+    owner: lucian
+    group: lucian
