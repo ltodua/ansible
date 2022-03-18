@@ -23,93 +23,15 @@
 
 - hosts: all
   become: true
-  tasks:
+  roles:
+    - base
 
-    - name: add ssh-key for ansible user
-      tags: always
-      authorized_key:
-        user: ansible
-        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+NrDR6/cstSlELDF/LSNkw2HfRQp0CUlaQLTJJByRfEWw/8zWmcM3T++IOHGnkH/edBBTiZeTrrBs3PEKCoK9tzb1Ve4VHxho4O66SNKKnct4owBqg1qopv4ZS1gIalIrqAWhfasCxmssIuyRhHg/WhmBj648A7I27BFIKDHrSt816on89EdD+kTbgEtwqVR1ODT6QQ6U0Y+yS8g/tX+I/b29idctXjNwdo6jeq9+pXSShl605WLIfqUqPlAXiPqivWmcBEHoqtUmyokPaQNmKSC/xi/CyqKCwzd71VEdE99OE/Oj8MFCccqb9LkjduyPDHoVR+hkRQydl2iIuBnyZj6ek60cDf45JirhVUFX9+QjoyOxoHbcKwmH/pms+VVr4bWBStTqmaN32LUdHKq9PDAGICowzf3S3Vei3GBZ6P86Y+u1u/1cqq9JaD7tS57sCIJwJdWQXAjGX2EONX39cLdj5WBqh2nQ24c/lapyY3Md2UIAtb8IRG8Cj7SczjhSqlcAekuludNm74jSyeQfOsxE6PQr1gEesTVjgEaPqNl+KlMta1Q80pz9UWPx4zixYE70kF3QxNLqe0sSz/ig/hVcHuyYw4rRIq3JYOlmxaX7UJDl3sldW9WxcUCf60gz64Im9WFHt4E9gaHRXthpo2e/AotfNQ6Cepco1T0PlQ== lucian@lenovo"
-
-
-
-- hosts: localhost
+- hosts: localhost #workstation
   become: true
-  tasks:
-
-    #play for installing unzip package
-    - name: install unzip
-      package:
-        name: unzip
-
-    #play for installing terraform binary package
-    - name: install terraform
-      unarchive: #this is ansible module for unziping .zip / .tar files with help of unzip package
-        src: https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip
-        dest: /usr/local/bin
-        remote_src: yes
-        mode: 0755
-        owner: lucian
-        group: lucian
-
-
+  roles:
+    - workstation
 
 - hosts: web_servers
   become: true
-  tasks:
-
-  #play for installing nginx package for ubuntu cuz apache2 is dissapointment and emberasment for its bugs
-  - name: install nginx package for Ubuntu
-    tags: apache,ubuntu,apache2
-    apt: #ubuntu package manager module
-      name: 
-        - nginx
-      #  - libapache2-mod-php
-      state: latest
-    when: ansible_distribution == "Ubuntu"
-
-  #play for installing apache "httpd" for centos
-  - name: install apache package for CentOS
-    tags: apache,centos,httpd
-    dnf: #centos 8 package manager module
-      name: 
-        - httpd
-        - php
-      state: latest
-    when: ansible_distribution == "CentOS"
-
-  #play for starting adn enabling httpd service of centos hosts
-  - name: start httpd (CentOS)
-    tags: apache,centos,httpd
-    service:
-      name: httpd
-      state: started
-      enabled: yes
-    when: ansible_distribution == "CentOS"
-
-  #play for using lineinfile module of ansible to change one line fo any file in hosts
-  - name: change e-mail address for admin #name of the play
-    tags: apache,centos,httpd #tags 
-    lineinfile: #ansible module which helps us change line of any file in the host
-      path: /etc/httpd/conf/httpd.conf #to change line we need path of the file . the colation
-      regexp: '^ServerAdmin' #in order to find on which line change should occur we are using regular exprestion
-      line: ServerAdmin somebody@somewhere.net #line to change existing line with
-    when: ansible_distribution == "CentOS" #condition to execute play only on centos hosts
-    register: httpd
-
-  - name: restart httpd (CentOS)
-    tags: apache,centos,httpd
-    service:
-      name: httpd
-      state: restarted
-    when: httpd.changed
-
-  #play for copying html files to apache servers
-  - name: copy defaults html file for site
-    tags: apache,apache2,httpd
-    copy:
-      src: default_site.html
-      dest: /var/www/html/index.html
-      owner: lucian
-      group: lucian
-      mode: 0644
+  roles:
+    - web_servers
