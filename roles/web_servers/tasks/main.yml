@@ -1,0 +1,55 @@
+#play for installing nginx package for ubuntu cuz apache2 is dissapointment and emberasment for its bugs
+- name: install nginx package for Ubuntu
+  tags: apache,ubuntu,apache2
+  apt: #ubuntu package manager module
+    name: 
+      - nginx
+    #  - libapache2-mod-php
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+#play for installing apache "httpd" for centos
+- name: install apache package for CentOS
+  tags: apache,centos,httpd
+  dnf: #centos 8 package manager module
+    name: 
+      - httpd
+      - php
+    state: latest
+  when: ansible_distribution == "CentOS"
+
+#play for starting adn enabling httpd service of centos hosts
+- name: start httpd (CentOS)
+  tags: apache,centos,httpd
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+  when: ansible_distribution == "CentOS"
+
+#play for using lineinfile module of ansible to change one line fo any file in hosts
+- name: change e-mail address for admin #name of the play
+  tags: apache,centos,httpd #tags 
+  lineinfile: #ansible module which helps us change line of any file in the host
+    path: /etc/httpd/conf/httpd.conf #to change line we need path of the file . the colation
+    regexp: '^ServerAdmin' #in order to find on which line change should occur we are using regular exprestion
+    line: ServerAdmin somebody@somewhere.net #line to change existing line with
+  when: ansible_distribution == "CentOS" #condition to execute play only on centos hosts
+  register: httpd
+
+- name: restart httpd (CentOS)
+  tags: apache,centos,httpd
+  service:
+    name: httpd
+    state: restarted
+  when: httpd.changed
+
+#play for copying html files to apache servers
+- name: copy defaults html file for site
+  tags: apache,apache2,httpd
+  copy:
+    src: default_site.html
+    dest: /var/www/html/index.html
+    owner: lucian
+    group: lucian
+    mode: 0644
