@@ -1,5 +1,12 @@
 ---
 
+# runs first to prepere hosts for ansible deployment.
+# with the yml file we update repos of hosts
+# create new user for ansible only
+# adding ssh key for the ansible user
+# addign ansible user to sudoers
+
+
 - hosts: all
   become: true
   pre_tasks: #gives us order executing tasks, plays
