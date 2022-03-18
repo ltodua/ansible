@@ -101,17 +101,28 @@ to execute multiple tags. run:
 
 
 
-
-### to do
-
 how to add files to hosts server ...
 
+created html page by name default_site.html which contains html boilerplate setup and siple header tag. this html file was copyed to the server as index.html file
+
 how to install binary package on hosts server ...
+
+in order to install binary applications on hosts first we must create play for installing unzip app and then create play with `unarchive` module of ansible.
 
 i have added comments about services and few ansible modules. at `site.yml` file
 
 more descriptive info later...
 
-`registar:` what it is ans that is does ...
-`lineinfile` module ...
-`services` how can we use them in the playbook ...
+`registar:` registar saves ansible play output into the variable. variable can be anystring name what we can come up with
+
+`lineinfile` module is for changing line of specific file which we must include into the play under lineinfile module. plus we need regular expretion to find specific line which we want to change, at last we have to include the line itself to replace previous line with
+
+`services` how can we use them in the playbook. with help of the `service` module we can start, stop, restart, status all the basic `service` commands we can execute them all.
+
+to manage the ansible hosts we must create ansible user and assign it sudoers priviladges. for more details see `bootstrap.yml` file
+
+bootstrap.yml file will update the hot repos, will create user, assign user workstation ssh key and add the name od the user in sudoers file.
+
+this step is done for preperation of the hosts in order to execute anbile configuration smoothly.
+
+if step is done successfully we can even you basic playbooks without asking for sudo password.
