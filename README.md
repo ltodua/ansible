@@ -122,7 +122,7 @@ i have added comments about services and few ansible modules. at `site.yml` file
 
 more descriptive info later...
 
-`registar:` registar saves ansible play output into the variable. variable can be anystring name what we can come up with
+`register:` registar saves ansible play output into the variable. variable can be anystring name what we can come up with
 
 `lineinfile` module is for changing line of specific file which we must include into the play under lineinfile module. plus we need regular expretion to find specific line which we want to change, at last we have to include the line itself to replace previous line with
 
