@@ -3,7 +3,8 @@
   tags: apache,ubuntu,apache2
   apt: #ubuntu package manager module
     name: 
-      - nginx
+      - "{{ apache_package_name }}"
+      - "{{ php_package_name }}"
     #  - libapache2-mod-php
     state: latest
   when: ansible_distribution == "Ubuntu"
@@ -13,16 +14,16 @@
   tags: apache,centos,httpd
   dnf: #centos 8 package manager module
     name: 
-      - httpd
-      - php
+      - "{{ apache_package_name }}"
+      - "{{ php_package_name }}"
     state: latest
   when: ansible_distribution == "CentOS"
 
-#play for starting adn enabling httpd service of centos hosts
+#play for starting and enabling httpd service of centos hosts
 - name: start httpd (CentOS)
   tags: apache,centos,httpd
   service:
-    name: httpd
+    name: "{{ apache_service }}"
     state: started
     enabled: yes
   when: ansible_distribution == "CentOS"
@@ -33,16 +34,17 @@
   lineinfile: #ansible module which helps us change line of any file in the host
     path: /etc/httpd/conf/httpd.conf #to change line we need path of the file . the colation
     regexp: '^ServerAdmin' #in order to find on which line change should occur we are using regular exprestion
-    line: ServerAdmin somebody@somewhere.net #line to change existing line with
+    line: ServerAdmin somebody@somewhere.com #line to change existing line with
   when: ansible_distribution == "CentOS" #condition to execute play only on centos hosts
-  register: httpd
+  notify: restart_apache # handler play name
+#  register: httpd
 
-- name: restart httpd (CentOS)
-  tags: apache,centos,httpd
-  service:
-    name: httpd
-    state: restarted
-  when: httpd.changed
+# - name: restart httpd (CentOS)
+#   tags: apache,centos,httpd
+#   service:
+#     name: "{{ apache_service }}"
+#     state: restarted
+#   when: httpd.changed
 
 #play for copying html files to apache servers
 - name: copy defaults html file for site
