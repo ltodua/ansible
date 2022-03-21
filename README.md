@@ -155,5 +155,12 @@ in web_server role folder we also have files folder, this is folder for resource
 
 with this modification site.yml only has all the hosts servers repo update and decleration of roles.
 
-## Hosts and Handlers
+## Host Vars and Handlers
 
+for the Host variables in the working direcotry we must create folder by name `host_vars`. inside of the folder we must create YML files for hosts
+
+this yml file can be named after host ip, name, or group like in inventory. naming is important.
+
+as for the handler goes. at the web_servers role folder or any ather role folder in need of handler we have to create folder `handlers` with `main.yml` inside. for handler to work we must create variable at the play so save changes and after change occur play with name of the variable will execute. handler is more eficient than register.
+
+for the `site.yml` example. at the `web_servers` tasks where email changes are made were created a `notify:` parameter with name `restart_apache`. after changes are made this restart apache play will execute which is located inside the web_servers role handlers folder, main.yml file.
