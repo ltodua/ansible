@@ -1,0 +1,3 @@
+apache_package_name: nginx
+apache_service: nginx
+php_package_name: libapache2-mod-php
