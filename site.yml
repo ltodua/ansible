@@ -26,10 +26,10 @@
   roles:
     - base
 
-- hosts: localhost #workstation
-  become: true
-  roles:
-    - workstation
+# - hosts: localhost #workstation
+#   become: true
+#   roles:
+#     - workstation
 
 - hosts: web_servers
   become: true
